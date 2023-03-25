@@ -1,12 +1,11 @@
-import { SwipeableList, SwipeableListItem } from "@sandstreamdev/react-swipeable-list";
-//import '@sandstreamdev/react-swipeable-list/dist/styles.css'
-
-import  { 
-    LeadingActions , 
-    SwipeAction , 
-    TrailingActions , 
-  }  from  'react-swipeable-list' ; 
-  import  'react-swipeable-list/dist/styles.css' ;
+import {
+    LeadingActions,
+    SwipeableList,
+    SwipeableListItem,
+    SwipeAction,
+    TrailingActions,
+  } from "react-swipeable-list";
+  import "react-swipeable-list/dist/styles.css";
 
 import { GastoType } from "../class/Gasto";
 import { formatearFecha } from '../helpers';
@@ -40,21 +39,33 @@ const diccionariosIconos: TipoDeObjeto = {
     suscripciones: IconoSuscipciones
 }
 
-const Gasto: React.FC<IPropsGasto> = ({gasto}) => {
+const Gasto: React.FC<IPropsGasto> = ({gasto, setGastoEditar, eliminarGasto}) => {
+
+    const leadingActions = () => (
+        <LeadingActions>
+          <SwipeAction onClick={() => setGastoEditar(gasto)}>
+            Editar
+          </SwipeAction>
+        </LeadingActions>
+      );
+      const trailingActions = () => (
+        <TrailingActions>
+          <SwipeAction 
+            onClick={() => gasto.id && eliminarGasto(gasto.id)}
+            destructive={true}
+          >
+            Eliminar
+          </SwipeAction>
+        </TrailingActions>
+      );
 
     const {id, fecha, nombre, cantidad, categoria} = gasto
     return ( 
         <SwipeableList>
-  <SwipeableListItem
-    swipeLeft={{
-        content: <h1>Izquierda</h1>,
-        action: () => console.info('swipe action triggered')
-      }}
-      swipeRight={{
-        content: <h1>Derecha</h1>,
-        action: () => console.info('swipe action triggered')
-      }}
-  >
+      <SwipeableListItem
+        leadingActions={leadingActions()}
+        trailingActions={trailingActions()}
+      >
                 <div className="gasto sombra">
                     <div className="contenido-gasto">
                         <img 
@@ -72,7 +83,7 @@ const Gasto: React.FC<IPropsGasto> = ({gasto}) => {
                     <p className="cantidad-gasto">${cantidad}</p>
                 </div>
                 </SwipeableListItem>
-</SwipeableList>
+    </SwipeableList>   
      );
 }
  
@@ -80,4 +91,6 @@ export default Gasto;
 
 interface IPropsGasto{
     gasto: GastoType
+    setGastoEditar: React.Dispatch<React.SetStateAction<GastoType>>
+    eliminarGasto: (id: string) => void
 }

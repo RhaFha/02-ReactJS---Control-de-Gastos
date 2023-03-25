@@ -9,9 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sandstreamdev/react-swipeable-list": "github:sandstreamdev/react-swipeable-list",
     "normalize.css": "^8.0.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-swipeable-list": "^1.7.2",
     "sweetalert2": "^11.7.3"

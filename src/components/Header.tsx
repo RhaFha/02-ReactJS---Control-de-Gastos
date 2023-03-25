@@ -3,6 +3,8 @@ import ControlPresupuesto from "./ControlPresupuesto";
 import { GastoType } from "../class/Gasto";
 
 const Header: React.FC<IPropsHeader> = ({presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPresupuesto, gastos}) => {
+    
+    
     return ( 
         <header>
             <h1>Planificador de Gastos</h1>

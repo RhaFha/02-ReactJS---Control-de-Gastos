@@ -1,15 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GastoType, InitGasto } from '../class/Gasto'
 import Mensaje from './Mensaje'
 
 import CerraBtm from '../img/cerrar.svg'
 
-const Modal: React.FC<IPropsModal> = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
+const Modal: React.FC<IPropsModal> = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar, setGastoEditar }) => {
 
     const [mensaje, setMensaje] = useState<string>('')
 
     const [formGasto, setFormGasto] = useState<GastoType>(InitGasto)
     const {nombre, cantidad, categoria} = formGasto;
+
+    useEffect( () => {
+        if(gastoEditar.id){
+            setFormGasto(gastoEditar);
+        }
+    }, [])
 
     const handleSubmit = (e: React.FormEvent):void => {
         e.preventDefault();
@@ -33,6 +39,8 @@ const Modal: React.FC<IPropsModal> = ({setModal, animarModal, setAnimarModal, gu
         setTimeout( () => {
             setModal(false);
         }, 500)
+
+        setGastoEditar(InitGasto);
     }
     return ( 
         <div className="modal">
@@ -44,7 +52,7 @@ const Modal: React.FC<IPropsModal> = ({setModal, animarModal, setAnimarModal, gu
                 />
             </div>
             <form className={`formulario ${animarModal ? 'animar': 'cerrar'}`} onSubmit={handleSubmit}>
-                <legend>Nuevo Gasto</legend>
+                <legend>{formGasto.id ? 'Editar Gasto' : 'Nuevo Gasto'}</legend>
 
                 {
                     mensaje && (<Mensaje tipo='error'>{mensaje}</Mensaje>)
@@ -87,7 +95,7 @@ const Modal: React.FC<IPropsModal> = ({setModal, animarModal, setAnimarModal, gu
                     </select>
                 </div>
 
-                <input type='submit' value='Añadir gasto' />
+                <input type='submit' value={ formGasto.id ? 'Actualizar Gasto' :'Añadir gasto'} />
             </form>
         </div>
      );
@@ -100,4 +108,6 @@ interface IPropsModal{
     animarModal: boolean
     setAnimarModal: React.Dispatch<React.SetStateAction<boolean>>
     guardarGasto: (gasto: GastoType) => void
+    gastoEditar: GastoType
+    setGastoEditar: React.Dispatch<React.SetStateAction<GastoType>>
 }
