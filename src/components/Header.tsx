@@ -2,7 +2,7 @@ import NuevoPesupuesto from "./NuevoPresupuesto";
 import ControlPresupuesto from "./ControlPresupuesto";
 import { GastoType } from "../class/Gasto";
 
-const Header: React.FC<IPropsHeader> = ({presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPresupuesto, gastos}) => {
+const Header: React.FC<IPropsHeader> = ({presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPresupuesto, gastos, setGastos}) => {
     
     
     return ( 
@@ -14,6 +14,9 @@ const Header: React.FC<IPropsHeader> = ({presupuesto, setPresupuesto, isValidPre
                     <ControlPresupuesto 
                         presupuesto={presupuesto}
                         gastos={gastos}
+                        setGastos={setGastos}
+                        setPresupuesto={setPresupuesto}
+                        setIsValidPresupuesto={setIsValidPresupuesto}
                     />
                 ):(
                     <NuevoPesupuesto 
@@ -37,4 +40,5 @@ interface IPropsHeader{
     isValidPresupuesto: boolean
     setIsValidPresupuesto: React.Dispatch<React.SetStateAction<boolean>>
     gastos: GastoType[]
+    setGastos: React.Dispatch<React.SetStateAction<GastoType[]>>
 }
